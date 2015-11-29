@@ -2,7 +2,7 @@
   "name": "crewlo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "hapi": "^11.1.2"
+},
+  "scripts": {
+    "start": "node server.js"
   }
 }
