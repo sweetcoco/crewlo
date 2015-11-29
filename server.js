@@ -1,25 +1,24 @@
-'use strict';
-var http = require("http"),
-    mysql = require("mysql"),
-    mysqlServer = mysql.createConnection({
-        host: process.env.RDS_HOSTNAME,
-        user: process.env.RDS_USERNAME,
-        password: process.env.RDS_PASSWORD,
-        port: process.env.RDS_PORT
-    });
+var Hapi = require('hapi');
 
-mysqlServer.connect(function(err) {
-    if (err) {
-        process.env['msg'] = 'Unable to connect to RDS - ' + err;
-    } else {
-        process.env['msg'] = 'Success! connected to RDS via ' + process.env.RDS_HOSTNAME;
-    }
+var port = process.env.PORT || 3000;
+
+var server = new Hapi.Server();
+server.connection({ host: '127.0.0.1', port: port });
+
+server.start(function () {
+    console.log('Server running at:', server.info.uri);
 });
 
-http.createServer(function(request, response) {
-    response.writeHead(200, {
-        "Content-Type": "text/plain"
-    });
-    response.write(process.env['msg']);
-    response.end();
-}).listen(process.env.PORT || 3000);
+
+var Hapi = require('hapi');
+
+var server = new Hapi.Server();
+server.connection({ port: 3000 });
+
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: function (request, reply) {
+        reply('Hello, world!');
+    }
+});
