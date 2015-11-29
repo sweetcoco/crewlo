@@ -1,33 +1,26 @@
 var Hapi = require('hapi');
+var connection = require('./database').connection;
 
 var port = process.env.PORT || 3000;
 
-var mysql = require('mysql'),
-    sup;
-
-var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT
-});
-
-connection.connect(function(err) {
-    if (err) {
-        sup = "oh no :(";
-    } else {
-        sup = "oh yeah!";
-    }
-});
-
 var server = new Hapi.Server();
 server.connection({ port: port });
+
+// server.register(require('hapi-auth-cookie'), function (err) {
+//
+//     server.auth.strategy('session', 'cookie', {
+//         password: 'secret',
+//         cookie: 'sid-example',
+//         redirectTo: '/login',
+//         isSecure: false
+//     });
+// });
 
 server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
-        reply('Hello, world!' + '<BR><BR>' + sup);
+        reply('Hello, world!' + '<BR><BR>' + connection.whatsUp);
     }
 });
 
