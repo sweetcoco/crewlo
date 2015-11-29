@@ -4,14 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "sweetcoco",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^11.1.2"
-},
-  "scripts": {
-    "start": "node server.js"
+    "hapi": "^11.1.2",
+    "mysql": "^2.9.0"
   }
 }
