@@ -1,10 +1,11 @@
 var mysql = require('mysql');
+var config = require('./config.js');
 
 var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT
+  host     : process.env.RDS_HOSTNAME || config.awsMysql.HOSTNAME,
+  user     : process.env.RDS_USERNAME || config.awsMysql.USERNAME,
+  password : process.env.RDS_PASSWORD || config.awsMysql.PASSWORD,
+  port     : process.env.RDS_PORT || config.awsMysql.RDS_PORT
 });
 
 connection.connect(function(err) {

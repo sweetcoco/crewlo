@@ -45,3 +45,4 @@ node_modules
 .awspublish*
 
 .creds
+config.js
