@@ -1,20 +1,13 @@
-var mysql = require('mysql');
 var config = require('./config.js');
 
-var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME || config.awsMysql.HOSTNAME,
-  user     : process.env.RDS_USERNAME || config.awsMysql.USERNAME,
-  password : process.env.RDS_PASSWORD || config.awsMysql.PASSWORD,
-  port     : process.env.RDS_PORT || config.awsMysql.RDS_PORT
+var pg = require('knex')({
+  client: 'pg',
+  connection: process.env.PG_CONNECTION_STRING || config.awsPostgres.CONSTRING,
+  searchPath: 'knex,public'
 });
 
-connection.connect(function(err) {
-    if (err) {
-        connection.whatsUp = 'Oh no :(';
-        return;
-    } else {
-        connection.whatsUp = 'Oh yeah baby oh yeah!!';
-    }
-});
+var bookshelf = require('bookshelf')(pg);
+//TODO: remove the connection inclusion in all files.
 
-exports.connection = connection;
+exports.pg = pg;
+exports.bookshelf = bookshelf;

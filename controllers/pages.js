@@ -1,10 +1,5 @@
-var connection = require('../database').connection;
-
 exports.index = {
-    auth: {
-		mode: 'try',
-		strategy: 'session'
-	},
+    auth: false,
 	handler: function (request, reply) {
         if (request.auth.isAuthenticated) {
             console.log(request.auth);
@@ -27,6 +22,7 @@ exports.register = {
             + '<a href="/">BACK HOME</a> <br/>'
             + '<form method="post" action="/register">'
             + 'Username: <input type="text" name="username"><br>'
+            + 'Email: <input type="text" name="email"><br>'
             + 'Password: <input type="password" name="password"><br/>'
             + '<input type="submit" value="Register"></form></body></html>');
     }
