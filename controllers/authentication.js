@@ -6,12 +6,12 @@ var User = require('../models/user').User;
 var jwtSign = require('../auth_jwt').jwtSign;
 
 exports.login = {
-	validate: {
-        payload: {
-            username: Joi.string().required(),
-            password: Joi.string().min(2).max(200).required()
-        }
-    },
+	// validate: {
+    //     payload: {
+    //         username: Joi.string().required(),
+    //         password: Joi.string().min(2).max(200).required()
+    //     }
+    // },
     auth: false,
 	handler: function (request, reply) {
         User.login(request.payload.username, request.payload.password)
@@ -27,15 +27,26 @@ exports.login = {
 
             var createWebToken = function(user) {
                 var token = jwtSign(user);
-                return reply({here:"some stuff"}).header("Authorization", token);
+                return reply({token: token}).header("Authorization", token);
             };
     }
 };
 
+exports.renew = {
+    //auth: 'jwt',
+	handler: function (request, reply) {
+        console.log('renewing!');
+        var token = jwtSign(request.payload);
+        console.log(token);
+        reply({token: token})
+            .header("Authorization", token);
+    }
+};
 
-exports.secret = {
+exports.users = {
     auth: 'jwt',
 	handler: function (request, reply) {
+        console.log('something');
         reply({text: "hey look at you using tokens!"})
             .header("Authorization", request.headers.authorization);
     }
