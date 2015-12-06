@@ -23,7 +23,8 @@ exports.index = {
     //     }
     // }
     handler: function (request, reply) {
-        reply.file('front/index.html');
+        //reply.file('front/index.html');
+        reply("hey!");
     }
 };
 
