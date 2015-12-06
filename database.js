@@ -2,7 +2,7 @@ var config = require('./config.js');
 
 var pg = require('knex')({
   client: 'pg',
-  connection: process.env.PG_CONNECTION_STRING || config.awsPostgres.CONSTRING,
+  connection: process.env.PG_CONNECTION_STRING || config.awsPostgres.CONSTRING || 'taco',
   searchPath: 'knex,public'
 });
 
