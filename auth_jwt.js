@@ -1,17 +1,9 @@
-var User = require('./models/user').User;
 var Jwt = require('jsonwebtoken');
 
 var validateFunc = function (decoded, request, callback) {
-    /*return new User({user_id: decoded.user_id})
-        .fetch()
-        .then(function(user) {
-            if (!user) {
-                console.log('no user');
-                return callback(null, false);
-            } else {
-                return callback(null, true);
-            }
-        });*/
+    // Just because we're not storing the token in our db doesn't mean we couldn't also query the user based on the token's properties, to verify the User
+    // this is likely overkill so I've decided to save ourselves a db query and instead just make sure that 'passNumber' checks out.
+
     // the thought process here is, we assign a number to the token, if someone guessed this number it would be extremely impressive.
     // changing the number would of course invalidate all tokens. The number is assigned below in userObj.
     if (decoded.passNumber === 1337) {
@@ -21,18 +13,13 @@ var validateFunc = function (decoded, request, callback) {
     }
 };
 
-
 var jwtSign = function(user) {
     var userObj = {
         user_id: user.user_id,
         username: user.username,
-        passNumber: 1337 // number is assigned here
-        //created_at: user.created_at
+        passNumber: 1337 // number is assigned here. TODO:PASS THIS IN AS process.env variable!!
     };
-
-    console.log(userObj);
-
-    var token = Jwt.sign(userObj, 'NeverShareYourSecret');
+    var token = Jwt.sign(userObj, 'NeverShareYourSecret'); // TODO:PASS THIS IN AS process.env variable!!
     return token;
 };
 exports.validateFunc = validateFunc;
