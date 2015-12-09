@@ -4,7 +4,14 @@ var port = process.env.PORT || 3000;
 var Inert = require('inert');
 
 var server = new Hapi.Server();
-server.connection({ port: port });
+server.connection({
+    port: port,
+    routes: {
+        cors: {
+            origin: ['http://d1rgtsqhwmm9xq.cloudfront.net/']
+        }
+    }
+});
 
 // Inert has to be manually registered since >= Hapi 9.0. Essentially it allows us to deliver the /dist file directory for our front end.
 // as of right now we actually aren't delivering from directories, but we'll keep it anyway.
