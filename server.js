@@ -8,7 +8,7 @@ server.connection({
     port: port,
     routes: {
         cors: {
-            origin: ['http://d1rgtsqhwmm9xq.cloudfront.net/']
+            origin: ['http://d1rgtsqhwmm9xq.cloudfront.net']
         }
     }
 });
